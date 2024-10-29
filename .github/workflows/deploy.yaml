@@ -1,0 +1,45 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js environment 🗳️
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Create SA key
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > gcloud.json
+
+      - name: Install Dependencies and Build
+        run: |
+          npm install
+          ./node_modules/.bin/nuxt build
+
+      - name: Pre Deploy
+        run: |
+          node ./predeploy.mjs
+
+      - name: Check File After Rename
+        run: |
+          cat .output/server/index.mjs
+
+      - name: Deploy
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: gcloud.json
+        run: |
+          npx firebase-tools deploy --only hosting,functions:jacobmillerServer --project website-admin-c9ce6 --debug
