@@ -10,6 +10,7 @@ import {
 import {
 	faCheck,
 	faEnvelope,
+	faLink,
 	faMoon,
 	faPalette,
 	faPrint,
@@ -37,7 +38,8 @@ library.add(
 	faLinkedinIn,
 	faGithubAlt,
 	faEnvelope,
-	faPrint
+	faPrint,
+	faLink
 );
 
 export default defineNuxtPlugin((nuxtApp) => {

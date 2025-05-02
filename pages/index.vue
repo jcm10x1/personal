@@ -7,7 +7,11 @@
             <div v-html="entry.content"></div>
         </div>
         <h2>Projects</h2>
+        <Card v-if="projects && projects.data" v-for="entry in projects.data" :title="entry.title"
+            :description="entry.description" :content="entry.content" />
         <h2>Organizations</h2>
+        <Card v-if="organizations && organizations.data" v-for="entry in organizations.data" :title="entry.title"
+            :description="entry.description" :content="entry.content" />
         <h2>Contact</h2>
     </div>
 
@@ -46,7 +50,7 @@ const { data: organizations } = await useFetch<any>(
         method: "GET",
         query: {
             websiteId: "e2Wdq5afxqCzvl0lGX3g",
-            contentGroupId: "VISQ67cdXcB9rh8IQqL6",
+            contentGroupId: "ejTrFXNB9ft8wMPGN4cB",
         },
         key: Date.now().toString() + "organizations",
 

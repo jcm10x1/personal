@@ -4,30 +4,38 @@
     <meta property="og:image" content="/OG_General.png">
 
     <SchemaOrgWebPage />
-    <div class="flex flex-col items-center gap-4 justify-center fixed p-4 left-0 right-0 top-0 z-50">
+    <div class="flex flex-col items-center gap-4 justify-center fixed backdrop-blur-xl p-4 left-0 right-0 top-0 z-50">
         <h1>Jacob Miller</h1>
         <ul class="menu">
 
-            <li class="btn"><a class="" href="https://twitter.com/1x1_Corp">
+            <li class="btn"><button
+                    onclick="window.open('https://www.linkedin.com/in/jacob-miller-715b222ba', '_blank')">
                     <font-awesome-icon icon="fa-brands fa-linkedin-in" />
-                </a></li>
+                </button></li>
 
-            <li class="btn"><a class="" href="https://twitter.com/1x1_Corp">
+            <li class="btn"><button onclick="window.open('https://github.com/jcm10x1', '_blank')">
                     <font-awesome-icon icon="fa-brands fa-github" />
-                </a></li>
-            <li class="btn"><a class="" href="https://twitter.com/1x1_Corp">
+                </button></li>
+            <li class="btn"><button onclick="window.open('https://x.com/jcm10x1', '_blank')">
                     <font-awesome-icon icon="fa-brands fa-x-twitter" />
-                </a></li>
-            <li class="btn"><a class="" href="https://twitter.com/1x1_Corp">
-                    <font-awesome-icon icon="fa-solid fa-print" />
-                </a></li>
-            <li class="btn"><a class="" href="https://twitter.com/1x1_Corp">
+                </button></li>
+            <ClientOnly>
+                <li class="btn">
+                    <button :onclick="generateContentPdf">
+                        <font-awesome-icon icon="fa-solid fa-print" />
+                    </button>
+                </li>
+            </ClientOnly>
+
+            <li class="btn"><button onclick="window.open('mailto:jmiller@1x1.dev', '_blank')">
                     <font-awesome-icon icon="fa-solid fa-envelope" />
-                </a></li>
+                </button></li>
 
 
         </ul>
+
     </div>
+
 
     <slot />
     <div class="fixed  right-4 bottom-4">
@@ -40,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import { generateContentPdf } from '../utils/generate_resume';
 const loadingColor = computed(() => {
     return useColorMode().value === 'dark' ? 'white' : 'black';
 });
@@ -100,7 +109,7 @@ body {
 
 .section,
 .input {
-    @apply rounded-xl text-xl font-semibold;
+    @apply rounded-xl;
 
     backdrop-filter: blur(50px);
     -webkit-backdrop-filter: blur(50px);
@@ -135,7 +144,7 @@ body {
 }
 
 .btn {
-    @apply section;
+    @apply section font-semibold text-lg;
 }
 
 .shrink {
@@ -176,6 +185,7 @@ body {
 h1,
 h2,
 h3,
+h4,
 label {
     @apply font-bold;
 }
@@ -191,6 +201,10 @@ h2,
 
 h3 {
     @apply text-xl;
+}
+
+h4 {
+    @apply text-lg;
 }
 
 .warning {
@@ -226,7 +240,7 @@ select {
 
 
 .input {
-    @apply focus:outline-none ring-secondary bg-transparent text-center;
+    @apply focus:outline-none ring-secondary bg-transparent text-center text-xl font-semibold;
 
 }
 
@@ -313,7 +327,7 @@ select {
 }
 
 .page {
-    @apply flex flex-col mt-[7.5rem] gap-4 p-4;
+    @apply flex flex-col mt-[7.5rem] gap-4 p-4 max-w-7xl mx-auto md:w-5/6 lg:w-4/6;
 }
 
 .form {
