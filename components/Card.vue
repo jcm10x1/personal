@@ -1,9 +1,11 @@
 <template>
-    <div class="flex flex-col section gap-2" @mouseenter="showContent = true" @mouseleave="showContent = false">
+    <div class="section flex flex-col gap-3">
         <h3>{{ title }}</h3>
         <h4>{{ description }}</h4>
-        <span v-if="showContent" v-html="displayContent"></span>
-        <div class="buttons" v-if="links.length && showContent">
+        <transition name="fade-slide">
+            <span v-if="expanded" v-html="displayContent"></span>
+        </transition>
+        <div class="buttons" v-if="links.length && expanded">
             <button class="btn" v-for="(link, index) in links" :key="index" @click="openLink(link.url)">
                 <font-awesome-icon :icon="getLinkIcon(link.label)" class="mr-2" />
                 {{ capitalizeFirstLetter(link.label) }}
@@ -19,11 +21,11 @@ const props = defineProps<{
     title: string;
     description: string;
     content: string;
+    expanded: boolean;
 }>();
 
 const links = ref<{ label: string; url: string }[]>([]);
 const displayContent = ref(props.content);
-const showContent = ref(false);
 
 const extractLinks = () => {
     const linkPatterns = {
@@ -68,4 +70,15 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+</style>

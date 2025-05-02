@@ -59,7 +59,7 @@ const loadingColor = computed(() => {
 
 <style>
 :root.dark {
-    --background-color: #000000;
+    --background-color: #031600;
 
 
 }
@@ -185,9 +185,12 @@ body {
 h1,
 h2,
 h3,
-h4,
 label {
     @apply font-bold;
+}
+
+h4 {
+    @apply font-medium;
 }
 
 h1 {
