@@ -1,5 +1,6 @@
 <template>
     <div class="page">
+        <img src="/headshot.jpeg" alt="picture" class="m-auto h-48 rounded-xl">
         <h2>About</h2>
         <div v-if="about?.data" v-for="entry in about.data" :key="entry.title">
             <h3>{{ entry.description }}</h3>
@@ -20,8 +21,6 @@
                 :description="entry.description" :content="entry.content" :expanded="hoveredCardIndex === i"
                 @mouseenter="onCardEnter(i)" @mouseleave="onCardLeave" :ref="el => registerCard(i + 1000, el)" />
         </div>
-
-        <h2>Contact</h2>
     </div>
 </template>
 
