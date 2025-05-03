@@ -3,7 +3,7 @@
         <img src="/headshot.jpeg" alt="picture" class="m-auto h-48 rounded-xl">
         <h2>About</h2>
         <div v-if="about?.data" v-for="entry in about.data" :key="entry.title">
-            <h3>{{ entry.description }}</h3>
+            <h3 v-if="entry.description != '*'">{{ entry.description }}</h3>
             <div v-html="entry.content"></div>
         </div>
 
