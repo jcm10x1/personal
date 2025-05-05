@@ -18,8 +18,10 @@
         <div v-if="organizations?.data" class="flex flex-col gap-4" @mouseleave="onGroupLeave"
             @mouseenter="cancelCollapse">
             <Card v-for="(entry, i) in organizations.data" :key="'org-' + i" :title="entry.title"
-                :description="entry.description" :content="entry.content" :expanded="hoveredCardIndex === i"
-                @mouseenter="onCardEnter(i)" @mouseleave="onCardLeave" :ref="el => registerCard(i + 1000, el)" />
+                :description="entry.description" :content="entry.content"
+                :expanded="hoveredCardIndex === i + projects.data.length"
+                @mouseenter="onCardEnter(i + projects.data.length)" @mouseleave="onCardLeave"
+                :ref="el => registerCard(i + projects.data.length, el)" />
         </div>
     </div>
 </template>
@@ -34,7 +36,7 @@ let collapseTimeout: ReturnType<typeof setTimeout> | null = null;
 // Mouse tracking
 const mouse = reactive({ x: 0, y: 0 });
 
-if (process.client) {
+if (import.meta.client) {
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
